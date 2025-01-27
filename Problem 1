@@ -32,13 +32,16 @@ renderer.render( scene, camera );
 
 // JS Code for Tetrahedron design
 
+//Import Orbit controls
+import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.121.1/examples/jsm/controls/OrbitControls.js';
+
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
 const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 500 );
 camera.position.set( 0, 0, 30 );
-camera.lookAt( 0, 3, 0 );
+camera.lookAt( 0, 5, 0 );
 
 const scene = new THREE.Scene();
 
@@ -46,21 +49,34 @@ const scene = new THREE.Scene();
 const material = new THREE.LineBasicMaterial( { color: 0xFFFFFFF } );
 
 const points = [];
-points.push( new THREE.Vector3( - 6, 0, 0 ) );
-points.push( new THREE.Vector3( 4, 10, 0 ) );
-points.push( new THREE.Vector3( 6, 0, 0 ) );
-points.push(new THREE.Vector3(-6, 0, 0));
-points.push(new THREE.Vector3(-6, 0, 0));
-points.push(new THREE.Vector3(8, -3, 0));
-points.push(new THREE.Vector3(6, 0, 0));
-points.push(new THREE.Vector3(8, -3, 0));
-points.push(new THREE.Vector3(4, 10, 0));
+points.push( new THREE.Vector3( -3, 0, 0 ) );
+points.push( new THREE.Vector3( 3, 0, 0 ) );
+points.push( new THREE.Vector3( 0, 0, -6 ) );
+points.push( new THREE.Vector3( -3, 0, 0 ) );
+points.push( new THREE.Vector3( 0, 6, -3 ) );
+points.push( new THREE.Vector3( 3, 0, 0 ) );
+points.push( new THREE.Vector3( 0, 6, -3 ) );
+points.push( new THREE.Vector3( 0, 0, -6 ) );
 
+// Create shape object
+const tetrahedron = new THREE.BufferGeometry().setFromPoints( points );
 
-const geometry = new THREE.BufferGeometry().setFromPoints( points );
-
-const line = new THREE.Line( geometry, material );
+const line = new THREE.Line( tetrahedron, material );
 
 scene.add( line );
 renderer.render( scene, camera );
 
+// Orbit controls for camera movement
+const controls = new OrbitControls(camera, renderer.domElement);
+
+
+var animate = function() {
+	// Use built-in JS function
+  requestAnimationFrame(animate);
+  
+  // Render the scene
+  renderer.render(scene, camera);
+}
+
+// Call function
+animate();
