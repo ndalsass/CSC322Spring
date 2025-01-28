@@ -32,7 +32,6 @@ renderer.render( scene, camera );
 
 // JS Code for Tetrahedron design
 
-//Import Orbit controls
 import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.121.1/examples/jsm/controls/OrbitControls.js';
 
 const renderer = new THREE.WebGLRenderer();
@@ -46,7 +45,7 @@ camera.lookAt( 0, 0, 0 );
 const scene = new THREE.Scene();
 
 //create a blue LineBasicMaterial
-const material = new THREE.LineBasicMaterial( { color: 0xFFFFFFF } );
+const material = new THREE.LineBasicMaterial( { color: 0xFFFFFF } );
 
 const points = [];
 
@@ -67,6 +66,10 @@ points.push( new THREE.Vector3( 0, 0, -0.28867513 ) );
 points.push( new THREE.Vector3( -0.25, 0, -0.433333 ) );
 points.push( new THREE.Vector3( 0, 0, -0.28867513 ) );
 points.push( new THREE.Vector3( 0.25, 0, -0.433333 ) );
+points.push( new THREE.Vector3( 0, 0, -0.28867513 ) );
+points.push( new THREE.Vector3( 0, 0.81649658, -0.28867513 ) );
+
+
 
 // Create shape object
 const tetrahedron = new THREE.BufferGeometry().setFromPoints( points );
