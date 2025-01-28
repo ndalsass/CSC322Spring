@@ -40,7 +40,7 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
 const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 500 );
-camera.position.set( 0, 0, 30 );
+camera.position.set( 0, 0, 2 );
 camera.lookAt( 0, 5, 0 );
 
 const scene = new THREE.Scene();
@@ -49,14 +49,24 @@ const scene = new THREE.Scene();
 const material = new THREE.LineBasicMaterial( { color: 0xFFFFFFF } );
 
 const points = [];
-points.push( new THREE.Vector3( -3, 0, 0 ) );
-points.push( new THREE.Vector3( 3, 0, 0 ) );
-points.push( new THREE.Vector3( 0, 0, -6 ) );
-points.push( new THREE.Vector3( -3, 0, 0 ) );
-points.push( new THREE.Vector3( 0, 6, -3 ) );
-points.push( new THREE.Vector3( 3, 0, 0 ) );
-points.push( new THREE.Vector3( 0, 6, -3 ) );
-points.push( new THREE.Vector3( 0, 0, -6 ) );
+
+// Calculations for a base equilateral 1 tetrahedron
+points.push( new THREE.Vector3( -0.5, 0, 0 ) );
+points.push( new THREE.Vector3( 0.5, 0, 0 ) );
+points.push( new THREE.Vector3( 0, 0, -0.866025 ) );
+points.push( new THREE.Vector3( -0.5, 0, 0 ) );
+points.push( new THREE.Vector3( 0, 0, 0 ) );
+points.push( new THREE.Vector3( 0, 0, -0.866025 ) );
+points.push( new THREE.Vector3( 0, 0.81649658, -0.28867513 ) );
+points.push( new THREE.Vector3( -0.5, 0, 0 ) );
+points.push( new THREE.Vector3( 0, 0.81649658, -0.28867513 ) );
+points.push( new THREE.Vector3( 0.5, 0, 0 ) );
+points.push( new THREE.Vector3( 0, 0, -0.28867513 ) );
+points.push( new THREE.Vector3( -0.5, 0, 0 ) );
+points.push( new THREE.Vector3( 0, 0, -0.28867513 ) );
+points.push( new THREE.Vector3( -0.25, 0, -0.433333 ) );
+points.push( new THREE.Vector3( 0, 0, -0.28867513 ) );
+points.push( new THREE.Vector3( 0.25, 0, -0.433333 ) );
 
 // Create shape object
 const tetrahedron = new THREE.BufferGeometry().setFromPoints( points );
