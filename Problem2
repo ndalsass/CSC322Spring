@@ -1,0 +1,97 @@
+// My initial attempt without filling it in, simply the linear geometry of the shape
+
+import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.121.1/examples/jsm/controls/OrbitControls.js';
+
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize( window.innerWidth, window.innerHeight );
+document.body.appendChild( renderer.domElement );
+
+const camera = new THREE.PerspectiveCamera( 100, window.innerWidth / window.innerHeight, 1, 2000 );
+camera.position.set( 0, 200, 700);
+camera.lookAt( 0, 200, 0 );
+
+const scene = new THREE.Scene();
+
+//create a blue LineBasicMaterial
+const material = new THREE.LineBasicMaterial( { color: 0x808080 } );
+
+// Calculations for Washington Monument base
+const bottomPoints = [];
+
+bottomPoints.push( new THREE.Vector3( 27.5, 0, 27.5 ) );
+bottomPoints.push( new THREE.Vector3( -27.5, 0, 27.5 ) );
+bottomPoints.push( new THREE.Vector3( -27.5, 0, -27.5 ) );
+bottomPoints.push( new THREE.Vector3( 27.5, 0, -27.5 ) );
+bottomPoints.push( new THREE.Vector3( 27.5, 0, 27.5 ) );
+
+// Calculations for Washington Monument top just before the pyramid
+const topPoints = [];
+
+topPoints.push( new THREE.Vector3( 17, 500, 17 ) );
+topPoints.push( new THREE.Vector3( -17, 500, 17 ) );
+topPoints.push( new THREE.Vector3( -17, 500, -17 ) );
+topPoints.push( new THREE.Vector3( 17, 500, -17 ) );
+topPoints.push( new THREE.Vector3( 17, 500, 17 ) );
+
+// Calculations for the walls connecting the top and the bottom
+const wallPoints = [];
+
+wallPoints.push(new THREE.Vector3(17, 500, 17));
+wallPoints.push( new THREE.Vector3( 27.5, 0, 27.5 ) );
+wallPoints.push( new THREE.Vector3( -27.5, 0, 27.5 ) );
+wallPoints.push( new THREE.Vector3( -17, 500, 17 ) );
+wallPoints.push( new THREE.Vector3( -17, 500, -17 ) );
+wallPoints.push( new THREE.Vector3( -27.5, 0, -27.5 ) );
+wallPoints.push( new THREE.Vector3( 27.5, 0, -27.5 ) );
+wallPoints.push( new THREE.Vector3( 17, 500, -17 ) );
+
+// Calculations for obelisk at the monuments top
+const obeliskPoints = [];
+
+obeliskPoints.push(new THREE.Vector3(0, 555, 0));
+obeliskPoints.push(new THREE.Vector3(17, 500, 17));
+obeliskPoints.push( new THREE.Vector3( -17, 500, 17 ) );
+obeliskPoints.push(new THREE.Vector3(0, 555, 0));
+obeliskPoints.push( new THREE.Vector3( -17, 500, -17 ) );
+obeliskPoints.push( new THREE.Vector3( 17, 500, -17 ) );
+obeliskPoints.push(new THREE.Vector3(0, 555, 0));
+
+
+// Create shape object
+const bottom = new THREE.BufferGeometry().setFromPoints( bottomPoints );
+const top = new THREE.BufferGeometry().setFromPoints(topPoints);
+const wall = new THREE.BufferGeometry().setFromPoints(wallPoints);
+const obelisk = new THREE.BufferGeometry().setFromPoints(obeliskPoints);
+
+
+const baseConstructor = new THREE.Line( bottom, material );
+const topConstructor = new THREE.Line(top, material);
+const wallConstructor = new THREE.Line(wall, material);
+const obeliskConstructor = new THREE.Line(obelisk, material);
+
+scene.add( baseConstructor );
+scene.add(topConstructor);
+scene.add(wallConstructor);
+scene.add(obeliskConstructor);
+
+renderer.render( scene, camera );
+
+// Orbit controls for camera movement
+const controls = new OrbitControls(camera, renderer.domElement);
+
+
+var animate = function() {
+	// Use built-in JS function
+  requestAnimationFrame(animate);
+  
+  // Keep camera position up to date
+  controls.update();
+  
+  // Render the scene
+  renderer.render(scene, camera);
+}
+
+// Call function
+animate();
+
+************************************************************************************************
