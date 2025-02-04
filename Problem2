@@ -94,6 +94,222 @@ var animate = function() {
 // Call function
 animate();
 
-************************************************************************************************
+******************************************************* SECOND ATTEMPT ****************************************************************************
 
 // My second attempt at the Washington Monument, constructing colored sides for the figure
+
+import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.121.1/examples/jsm/controls/OrbitControls.js';
+
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize( window.innerWidth, window.innerHeight );
+document.body.appendChild( renderer.domElement );
+
+const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 2000 );
+camera.position.set( 0, 0, 1000 );
+camera.lookAt( 0, 200, 0 );
+
+const scene = new THREE.Scene();
+
+/************************* WALLS *********************************/
+
+// FRONT WALL
+const frontWall = new THREE.BufferGeometry();
+
+// Front side wall geometry
+// vertices because each vertex needs to appear once per triangle.
+const vertices1 = new Float32Array( [
+	-27.5, 0,  27.5, // v0
+	 27.5, 0,  27.5, // v1
+	 17, 500,  17, // v2
+
+	 17,  500,  17, // v3
+	-17,  500,  17, // v4
+	-27.5, 0,  27.5  // v5
+] );
+
+// Create a blue color for the front using THREE.ColorKeywords
+let frontColor = new THREE.Color("blue");
+// itemSize = 3 because there are 3 values (components) per vertex
+frontWall.setAttribute( 'position', new THREE.BufferAttribute( vertices1, 3 ) );
+const material1 = new THREE.MeshBasicMaterial( { color: frontColor } );
+const mesh1 = new THREE.Mesh( frontWall, material1 );
+
+scene.add( mesh1 );
+
+// LEFT WALL
+const leftWall = new THREE.BufferGeometry();
+
+// Left side wall geometry
+// Vertices because each vertex needs to appear once per triangle.
+const vertices2 = new Float32Array( [
+  -27.5, 0,  -27.5, // v0
+  -27.5, 0,  27.5, // v1
+	-17, 500,  17, // v2
+
+	-17,  500,  17, // v3
+	-17,  500,  -17, // v4
+	-27.5, 0,  -27.5  // v5
+] );
+
+// itemSize = 3 because there are 3 values (components) per vertex
+leftWall.setAttribute( 'position', new THREE.BufferAttribute( vertices2, 3 ) );
+const material2 = new THREE.MeshBasicMaterial( { color: 0x964B00 } );
+const mesh2 = new THREE.Mesh( leftWall, material2 );
+
+scene.add( mesh2 );
+
+// RIGHT WALL
+const rightWall = new THREE.BufferGeometry();
+
+// Right side wall geometry
+// Vertices because each vertex needs to appear once per triangle.
+const vertices3 = new Float32Array( [
+  27.5, 0,  27.5, // v0
+  27.5, 0,  -27.5, // v1
+	17, 500,  -17, // v2
+
+	17,  500,  -17, // v3
+	17,  500,  17, // v4
+	27.5, 0,  27.5  // v5
+] );
+
+// itemSize = 3 because there are 3 values (components) per vertex
+rightWall.setAttribute( 'position', new THREE.BufferAttribute( vertices3, 3 ) );
+const material3 = new THREE.MeshBasicMaterial( { color: 0x800000 } );
+const mesh3 = new THREE.Mesh( rightWall, material3 );
+
+scene.add( mesh3 );
+
+// BACK WALL
+const backWall = new THREE.BufferGeometry();
+
+// Right side wall geometry
+// Vertices because each vertex needs to appear once per triangle.
+const vertices4 = new Float32Array( [
+  27.5, 0,  -27.5, // v0
+  -27.5, 0,  -27.5, // v1
+	-17, 500,  -17, // v2
+
+	-17,  500,  -17, // v3
+	17,  500,  -17, // v4
+	27.5, 0,  -27.5  // v5
+] );
+
+// itemSize = 3 because there are 3 values (components) per vertex
+backWall.setAttribute( 'position', new THREE.BufferAttribute( vertices4, 3 ) );
+const material4 = new THREE.MeshBasicMaterial( { color: 0x00FF00 } );
+const mesh4 = new THREE.Mesh( backWall, material4 );
+
+scene.add( mesh4 );
+
+/************************* PYRAMID SIDES ***********************************/
+
+// FRONT SIDE
+const pyramidFront = new THREE.BufferGeometry();
+
+// Front side of pyramid geometry
+// Vertices because each vertex needs to appear once per triangle.
+const vertices5 = new Float32Array( [
+  -17, 500,  17, // v0
+  17, 500,  17, // v1
+	0, 555,  0, // v2
+] );
+
+// itemSize = 3 because there are 3 values (components) per vertex
+pyramidFront.setAttribute( 'position', new THREE.BufferAttribute( vertices5, 3 ) );
+
+// RGB for light yellow on the front side *first usage*
+const material5 = new THREE.MeshBasicMaterial( { color: "rgb(255, 255, 0)" } );
+const mesh5 = new THREE.Mesh( pyramidFront, material5 );
+
+scene.add( mesh5 );
+
+// LEFT SIDE
+const pyramidLeft = new THREE.BufferGeometry();
+
+// Left side of pyramid geometry
+// Vertices because each vertex needs to appear once per triangle.
+const vertices6 = new Float32Array( [
+  -17, 500,  -17, // v0
+  -17, 500,  17, // v1
+	0, 555,  0, // v2
+] );
+
+// itemSize = 3 because there are 3 values (components) per vertex
+pyramidLeft.setAttribute( 'position', new THREE.BufferAttribute( vertices6, 3 ) );
+const material6 = new THREE.MeshBasicMaterial( { color: 0xFCD12A } );
+const mesh6 = new THREE.Mesh( pyramidLeft, material6 );
+
+scene.add( mesh6 );
+
+// RIGHT SIDE
+const pyramidRight = new THREE.BufferGeometry();
+
+// Right side of pyramid geometry
+// Vertices because each vertex needs to appear once per triangle.
+const vertices7 = new Float32Array( [
+  17, 500,  17, // v0
+  17, 500,  -17, // v1
+	0, 555,  0, // v2
+] );
+
+// itemSize = 3 because there are 3 values (components) per vertex
+pyramidRight.setAttribute( 'position', new THREE.BufferAttribute( vertices7, 3 ) );
+const material7 = new THREE.MeshBasicMaterial( { color: 0xFCD12A } );
+const mesh7 = new THREE.Mesh( pyramidRight, material7 );
+
+scene.add( mesh7 );
+
+// BACK SIDE
+const pyramidBack = new THREE.BufferGeometry();
+
+// Back side of pyramid geometry
+// Vertices because each vertex needs to appear once per triangle.
+const vertices8 = new Float32Array( [
+  17, 500,  -17, // v0
+  -17, 500,  -17, // v1
+	0, 555,  0, // v2
+] );
+
+// itemSize = 3 because there are 3 values (components) per vertex
+pyramidBack.setAttribute( 'position', new THREE.BufferAttribute( vertices8, 3 ) );
+
+
+// RGB for a darker shade of yellow on the back side *second usage*
+const material8 = new THREE.MeshBasicMaterial( { color: "rgb(139, 128, 0)" } );
+const mesh8 = new THREE.Mesh( pyramidBack, material8 );
+
+scene.add( mesh8 );
+
+/**************************************************************************/
+
+// Orbit controls for camera movement
+const controls = new OrbitControls(camera, renderer.domElement);
+
+// Add panning capabilities
+controls.screenSpacePanning = true;
+
+var animate = function() {
+	// Use built-in JS function to rotate Monument around y-axis
+  requestAnimationFrame(animate);
+  
+  mesh1.rotation.y += 0.03;
+  mesh2.rotation.y += 0.03;
+  mesh3.rotation.y += 0.03;
+  mesh4.rotation.y += 0.03;
+  mesh5.rotation.y += 0.03;
+  mesh6.rotation.y += 0.03;
+  mesh7.rotation.y += 0.03;
+  mesh8.rotation.y += 0.03;
+  
+  // Keep camera position up to date
+  controls.update();
+  
+  // Render the scene
+  renderer.render(scene, camera);
+}
+
+// Call function
+animate();
+
+********************************************************* END FILE ***************************************************************************
