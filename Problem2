@@ -95,3 +95,5 @@ var animate = function() {
 animate();
 
 ************************************************************************************************
+
+// My second attempt at the Washington Monument, constructing colored sides for the figure
