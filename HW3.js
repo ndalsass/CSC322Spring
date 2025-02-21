@@ -1,0 +1,71 @@
+import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/build/three.module.js';
+// Import OrbitControls
+import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/examples/jsm/controls/OrbitControls.js';
+// Create renderer
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// Create camera
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 500);
+camera.position.set(0, 0, 20);
+
+window.addEventListener('resize', () => {
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+});
+
+// Create OrbitControls
+const controls = new OrbitControls(camera, renderer.domElement); 
+// Adds smooth motion 
+controls.enableDamping = true; 
+controls.dampingFactor = 0.05;
+controls.screenSpacePanning = true;
+controls.minDistance = 15;
+controls.maxDistance = 200;
+
+// Create scene
+const scene = new THREE.Scene();
+
+// Create an infinity symbol 𝐹(𝑥,𝑦)=(𝑥^2 + 𝑦^2)^2 − 2^2(𝑥^2 − 𝑦^2) = 0
+const infinityMaterial = new THREE.LineBasicMaterial({ color: 0x00FFFF }); 
+const infinityPoints = [];
+// Circle radius
+const radius = 2; 
+// Number of segments to approximate the infinity sign
+const segments = 1000
+
+// Top half
+for (let i = 0; i <= segments; i++) {
+	const theta = (i / segments) * 2 * Math.PI;
+	const x = radius * Math.cos(theta);
+    // After simplifying the equation for y, I got this insane function of x
+	const y = Math.sqrt(-Math.pow(x, 2) - 2 + 2 * (Math.sqrt(2*Math.pow(x, 2) + 1)));
+
+	infinityPoints.push(new THREE.Vector3(x, y, 0));
+}
+
+// Bottom half
+for (let i = segments; i >= 0; i--) {
+	const theta = (i / segments) * 2 * Math.PI;
+	const x = radius * Math.cos(theta);
+	const y = Math.sqrt(-Math.pow(x, 2) - 2 + 2*Math.sqrt(2*Math.pow(x, 2) + 1));
+
+	infinityPoints.push(new THREE.Vector3(x, -y, 0));
+}
+
+const infinityGeometry = new THREE.BufferGeometry().setFromPoints(infinityPoints);
+const infinity = new THREE.Line(infinityGeometry, infinityMaterial);
+scene.add(infinity);
+
+// Animation loop for rendering and controls update 
+function animate() {
+	requestAnimationFrame(animate);
+	// Required for damping to work 
+    controls.update(); 
+	renderer.render(scene, camera);
+}
+
+// Start the animation loop 
+animate();
